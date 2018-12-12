@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+
+  ftpclient:
+    image: joaniznardo/ubuntum7base
+    privileged: true
+    mem_limit: 100m
+    hostname: ftpclient
+    container_name: ftpclient
+    cap_add: 
+      - NET_ADMIN
+      - SYS_ADMIN
+    networks: 
+      x1:
+        ipv4_address: 10.1.0.101
+
+  ftpserver:
+    image: joaniznardo/ubuntum7base
+    privileged: true
+    mem_limit: 100m
+    hostname: ftpserver
+    container_name: ftpserver
+    networks: 
+      x1:
+        ipv4_address: 10.1.0.100
+
+networks:
+
+  x1:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.1.0.0/24
+          ip_range: 10.1.0.0/30
+          gateway: 10.1.0.1
+          aux_addresses:
+            host1: 10.1.0.2
+            host2: 10.1.0.3        
